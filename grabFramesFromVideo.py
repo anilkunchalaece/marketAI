@@ -43,7 +43,7 @@ class Frames():
         print("completed grabbing frames")
 
 def main() :
-    grabFrames = Frames('test.mp4','data')
+    grabFrames = Frames('test.mp4','data/org')
     grabFrames.grabFrames(50)
 
 main()

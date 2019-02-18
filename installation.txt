@@ -1,0 +1,48 @@
+# Author : Kunchala Anil
+# Email : anilkunchalaece@gmail.com
+# Date : Feb 7 2019
+
+This file will consist of all the installation instructions i followed to install tensorflow and 
+object detection API in raspberry PI
+
+Step 1 : Installing Tensorflow in RaspberryPi
+Ref : https://www.raspberrypi.org/magpi/tensorflow-ai-raspberry-pi/
+
+        sudo apt install libatlas-base-dev
+        pip3 install tensorflow
+
+Got the following error while running pip install
+    Could not find a version that satisfies the requirement tensorflow (from versions: )
+    No matching distribution found for tensorflow
+
+To resolve use following : 
+    python3 -m pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/debian/jessie/tensorflow-1.12.0rc1-cp27-none-linux_x86_64.whl
+
+    Got Error : unsupported wheel on this platform
+Ref - https://www.raspberrypi.org/forums/viewtopic.php?t=219853
+tenorflow for the Pi is only available from Ben Nuttall's piwheels.
+You need to create /etc/pip.conf using
+
+        sudo nano /etc/pip.conf
+Then Add
+        [global]
+        extra-index-url=https://www.piwheels.org/simple
+Then run 
+        pip3 install tensorflow
+
+It stopped with following error :
+ HTTP error 404 while getting https://www.piwheels.org/simple/numpy/numpy-1.16.1-cp34-cp34m-linux_armv7l.whl#sha256=5be2ea06bbfdabf81cb005df35206fa98ad6f3b99ad1088317e049d2596a6cfb (from https://www.piwheels.org/simple/numpy/)
+  Could not install requirement numpy>=1.13.3 from https://www.piwheels.org/simple/numpy/numpy-1.16.1-cp34-cp34m-linux_armv7l.whl#sha256=5be2ea06bbfdabf81cb005df35206fa98ad6f3b99ad1088317e049d2596a6cfb (from tensorflow) because of error 404 Client Error: Not Found for url: https://www.piwheels.org/simple/numpy/numpy-1.16.1-cp34-cp34m-linux_armv7l.whl
+
+Then I installed Numpy=1.13.3
+using   
+        pip3 install --user numpy=1.13.3
+
+Installation of Tensorflow completed
+
+------------------------------------------------------------------------
+Model Installation
+
+
+
+

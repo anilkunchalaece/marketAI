@@ -10,7 +10,9 @@ class PreprocessData:
         self.validDir = os.path.join(rootDir,'Valid')
         self.testDir = os.path.join(rootDir,'Test')
 
-        self.testData  = tuple()
+        self.labelMapping  = ('beans','bottleGourd','brinjal','broadBeans','carrot','garlic',
+                                    'ginger','green_chilli','ivyguard','lemon','oninon','potato',
+                                    'radish','red_chilli','tomoto')
     
     def readImageReturnArray(self,imageName):
         imArray = cv2.imread(imageName,0)
@@ -27,7 +29,7 @@ class PreprocessData:
             for imgName in os.listdir(os.path.join(self.testDir,classDir)) :
                 imgPath = os.path.join(self.testDir,classDir,imgName)
                 testFeatureArray.append(self.readImageReturnArray(imgPath))
-                testClassArray.append(classDir)
+                testClassArray.append(self.labelMapping.index(classDir))
         
         return (np.array(testFeatureArray) , np.array(testClassArray))
 
@@ -38,7 +40,8 @@ class PreprocessData:
             for imgName in os.listdir(os.path.join(self.trainDir,classDir)) :
                 imgPath = os.path.join(self.trainDir,classDir,imgName)
                 trainFeatureArray.append(self.readImageReturnArray(imgPath))
-                trainClassArray.append(classDir)
+                # print(classDir)
+                trainClassArray.append(self.labelMapping.index(classDir))
         
         return (np.array(trainFeatureArray) , np.array(trainClassArray))
 
@@ -49,7 +52,7 @@ class PreprocessData:
             for imgName in os.listdir(os.path.join(self.validDir,classDir)) :
                 imgPath = os.path.join(self.validDir,classDir,imgName)
                 validFeatureArray.append(self.readImageReturnArray(imgPath))
-                validClassArray.append(classDir)
+                validClassArray.append(self.labelMapping.index(classDir))
         
         return (np.array(validFeatureArray) , np.array(validClassArray))             
 

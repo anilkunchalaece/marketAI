@@ -43,7 +43,10 @@ class Frames():
         print("completed grabbing frames")
 
 def main() :
-    grabFrames = Frames('test.mp4','data/org')
+    FILENAME = 'bigMotorX2.mp4'
+    OUTPUT_DIR = 'dataOrg'
+    grabFrames = Frames(FILENAME,OUTPUT_DIR)
     grabFrames.grabFrames(50)
 
-main()
+if __name__ == "__main__":
+    main()

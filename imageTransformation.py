@@ -9,12 +9,13 @@ import numpy
 import os,shutil
 
 class Transform:
-    def __init__(self):
+    def __init__(self,baseDir,srcDir,desDir,desSize):
         self.imageHeight = 0
         self.imageWidth = 0
-        self.imgBaseDirectory = 'data/'
-        self.srcDirectory = self.imgBaseDirectory+'org/'
-        self.directoryToSave = self.imgBaseDirectory+'edit/'
+        self.imgBaseDirectory = baseDir
+        self.srcDirectory = self.imgBaseDirectory+'/'+srcDir
+        self.directoryToSave = self.imgBaseDirectory+ '/' +desDir
+        self.desImgSize = desSize
     
     def calculateImageProperties(self,imageObj):
         self.imageHeight , self.imageWidth = imageObj.shape[:2]
@@ -26,27 +27,29 @@ class Transform:
         '''
         srcImageObj = cv2.imread(image)
         self.calculateImageProperties(srcImageObj)
-        destImageName = self.directoryToSave+ image.replace('data/org/','')
-
+        destImageName = self.directoryToSave+ image.replace(self.srcDirectory,'')
         output = cv2.resize(srcImageObj,destImgSize,interpolation=cv2.INTER_LINEAR)
-        print(destImageName)
         cv2.imwrite(destImageName,output)
     
-    def resizeImagesInDirectory(self,srcDirectory,desImgSize):
+    def resizeImagesInDirectory(self):
 
-        allImages = os.listdir(self.imgBaseDirectory + srcDirectory)
+        allImages = os.listdir(self.srcDirectory)
         
         print("total number of images to be resized is : "+ str(len(allImages)))
         
         # resize all images 
         for image in allImages :
-            imgName = self.imgBaseDirectory + srcDirectory + '/' + image
-            self.resizeImage(imgName,desImgSize)
+            imgName = self.srcDirectory + '/' + image
+            self.resizeImage(imgName,self.desImgSize)
 
 
 def main():
-    editImg = Transform()
-    desImgSize = (200,200) #tuple
-    editImg.resizeImagesInDirectory('org',desImgSize)
+    BASE_DIR = 'data3'
+    SOURCE_DIR = 'org'
+    DESTINATION_DIR = 'edit'
+    DESTINATION_IMG_SIZE = (100,100) #tuple
+    editImg = Transform(BASE_DIR,SOURCE_DIR,DESTINATION_DIR,DESTINATION_IMG_SIZE)
+    editImg.resizeImagesInDirectory()
 
-main()
+if __name__ == "__main__":
+    main()
